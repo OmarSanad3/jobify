@@ -11,9 +11,9 @@ export const getAllJobs = async (req, res, next) => {
 export const getJob = async (req, res, next) => {
   const { id } = req.params;
 
-  const job = await Job.findById(jobId);
+  const job = await Job.findById(id);
 
-  if (!job) throw new NotFoundError(`No job with this ${jobId}.`);
+  if (!job) throw new NotFoundError(`No job with this ${id}.`);
 
   res.status(StatusCodes.OK).json({ message: "Fetched Job", job });
 };
@@ -33,11 +33,11 @@ export const createJob = async (req, res, next) => {
 export const updateJob = async (req, res, next) => {
   const { id } = req.params;
 
-  const updatedJob = await Job.findByIdAndUpdate(jobId, req.body, {
+  const updatedJob = await Job.findByIdAndUpdate(id, req.body, {
     new: true,
   });
 
-  if (!updatedJob) throw new NotFoundError(`No job with this ${jobId}.`);
+  if (!updatedJob) throw new NotFoundError(`No job with this ${id}.`);
 
   res.status(StatusCodes.OK).json({ message: "Job update", job: updatedJob });
 };
@@ -45,9 +45,9 @@ export const updateJob = async (req, res, next) => {
 export const deleteJob = async (req, res, next) => {
   const { id } = req.params;
 
-  const deletedJob = await Job.findByIdAndDelete(jobId);
+  const deletedJob = await Job.findByIdAndDelete(id);
 
-  if (!deletedJob) throw new NotFoundError(`No job with this ${jobId}.`);
+  if (!deletedJob) throw new NotFoundError(`No job with this ${id}.`);
 
   res.status(StatusCodes.OK).json({ message: "Job Deleted", deletedJob });
 };
