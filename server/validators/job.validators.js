@@ -3,7 +3,7 @@ import { body } from "express-validator";
 import withValidationErrors from "../middlewares/withValidationErrors.js";
 import { JOB_STATUS, JOB_TYPE } from "../utils/constants.js";
 
-export const jobInputValidator = withValidationErrors([
+export const validateJobInput = withValidationErrors([
   body("company").notEmpty().withMessage("company is required"),
   body("position").notEmpty().withMessage("position is required"),
   body("jobLocation").notEmpty().withMessage("jobLocation is required"),
