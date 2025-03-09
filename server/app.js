@@ -1,7 +1,7 @@
 import "express-async-errors";
 
-import * as dotevn from "dotenv";
-dotevn.config();
+import * as dotenv from "dotenv";
+dotenv.config();
 
 import express from "express";
 import morgan from "morgan";
