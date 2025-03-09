@@ -1,5 +1,7 @@
 import { Router } from "express";
 
+import { jobInputValidator } from "../validators/job.validators.js";
+
 const router = Router();
 
 import {
@@ -20,7 +22,11 @@ import {
 
 // router.delete("/:jobId/", deleteJob);
 
-router.route("/").get(getAllJobs).post(createJob);
-router.route("/:jobId/").get(getJob).patch(updateJob).delete(deleteJob);
+router.route("/").get(getAllJobs).post(jobInputValidator, createJob);
+router
+  .route("/:jobId/")
+  .get(getJob)
+  .patch(jobInputValidator, updateJob)
+  .delete(deleteJob);
 
 export default router;
