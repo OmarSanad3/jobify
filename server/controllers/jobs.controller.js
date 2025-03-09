@@ -9,7 +9,7 @@ export const getAllJobs = async (req, res, next) => {
 };
 
 export const getJob = async (req, res, next) => {
-  const { jobId } = req.params;
+  const { id } = req.params;
 
   const job = await Job.findById(jobId);
 
@@ -31,7 +31,7 @@ export const createJob = async (req, res, next) => {
 };
 
 export const updateJob = async (req, res, next) => {
-  const { jobId } = req.params;
+  const { id } = req.params;
 
   const updatedJob = await Job.findByIdAndUpdate(jobId, req.body, {
     new: true,
@@ -43,7 +43,7 @@ export const updateJob = async (req, res, next) => {
 };
 
 export const deleteJob = async (req, res, next) => {
-  const { jobId } = req.params;
+  const { id } = req.params;
 
   const deletedJob = await Job.findByIdAndDelete(jobId);
 

@@ -24,7 +24,7 @@ import {
 
 router.route("/").get(getAllJobs).post(validateJobInput, createJob);
 router
-  .route("/:jobId/")
+  .route("/:id/")
   .get(getJob)
   .patch(validateJobInput, updateJob)
   .delete(deleteJob);
