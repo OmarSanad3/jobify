@@ -1,4 +1,5 @@
-import { body } from "express-validator";
+import mongoose from "mongoose";
+import { body, param } from "express-validator";
 
 import withValidationErrors from "../middlewares/withValidationErrors.js";
 import { JOB_STATUS, JOB_TYPE } from "../utils/constants.js";
@@ -17,4 +18,10 @@ export const validateJobInput = withValidationErrors([
     .withMessage("jobType is required")
     .isIn(Object.values(JOB_TYPE))
     .withMessage("Invalid jobType value"),
+]);
+
+export const validateIdParam = withValidationErrors([
+  param("id")
+    .custom((value) => mongoose.Types.ObjectId.isValid(value))
+    .withMessage("Invalid MongoDb id"),
 ]);
