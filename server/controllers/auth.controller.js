@@ -45,3 +45,12 @@ export const login = async (req, res, next) => {
 
   res.status(StatusCodes.OK).json({ message: "Login user" });
 };
+
+export const logout = (req, res, next) => {
+  res.cookie("token", "logout", {
+    expires: new Date(Date.now()),
+    secure: process.env.NODE_ENV === "production", // * if production, set it to https
+  });
+
+  res.status(StatusCodes.OK).send({ message: "User logged out" });
+};
