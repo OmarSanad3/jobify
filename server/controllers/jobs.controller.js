@@ -15,23 +15,22 @@ export const getAllJobs = async (req, res, next) => {
 export const getJob = async (req, res, next) => {
   const { id } = req.params;
 
-  const job = await Job.findById(id);
+  const job = await validateJobId(id, req);
 
-  if (!job) throw new NotFoundError(`No job with this ${id}.`);
-
-  if (job.createdBy.toString() !== req.user.userId.toString())
-    throw new UnAuthorizedError("You are UnAuthorized");
-
-  res.status(StatusCodes.OK).json({ message: "Fetched Job", job });
+  res.status(StatusCodes.OK).json({ message: "Fetched Job...", job });
 };
 
 export const createJob = async (req, res, next) => {
-  const { company, position } = req.body;
+  const { company, position, jobLocation, jobStatus, jobType } = req.body;
 
-  if (!company || !position)
-    throw new BadRequestError("Please provide company and position");
-
-  const job = new Job({ company, position, createdBy: req.user.userId });
+  const job = new Job({
+    company,
+    position,
+    jobLocation,
+    jobStatus,
+    jobType,
+    createdBy: req.user.userId,
+  });
   await job.save();
 
   res.status(StatusCodes.CREATED).json({ message: "Job Added", newJob: job });
@@ -39,28 +38,40 @@ export const createJob = async (req, res, next) => {
 
 export const updateJob = async (req, res, next) => {
   const { id } = req.params;
+  const { company, position, jobLocation, jobStatus, jobType } = req.body;
 
-  const updatedJob = await Job.findByIdAndUpdate(id, req.body, {
-    new: true,
-  });
+  let job = await validateJobId(id, req);
 
-  if (!updatedJob) throw new NotFoundError(`No job with this ${id}.`);
+  job.company = company;
+  job.position = position;
+  job.jobLocation = jobLocation;
+  job.jobStatus = jobStatus;
+  job.jobType = jobType;
 
-  if (updatedJob.createdBy.toString() !== req.user.userId.toString())
-    throw new UnAuthorizedError("You are UnAuthorized");
+  await job.save();
 
-  res.status(StatusCodes.OK).json({ message: "Job update", job: updatedJob });
+  res.status(StatusCodes.OK).json({ message: "Job update", job });
 };
 
 export const deleteJob = async (req, res, next) => {
   const { id } = req.params;
 
-  const deletedJob = await Job.findByIdAndDelete(id);
+  const job = await validateJobId(id, req);
 
-  if (!deletedJob) throw new NotFoundError(`No job with this ${id}.`);
+  await job.deleteOne();
 
-  if (deletedJob.createdBy.toString() !== req.user.userId.toString())
+  res.status(StatusCodes.OK).json({ message: "Job Deleted" });
+};
+
+// ======================================== Helpers ========================================
+
+const validateJobId = async (id, req) => {
+  const job = await Job.findById(id);
+
+  if (!job) throw new NotFoundError(`No job with this ${id}.`);
+
+  if (job.createdBy.toString() !== req.user.userId.toString())
     throw new UnAuthorizedError("You are UnAuthorized");
 
-  res.status(StatusCodes.OK).json({ message: "Job Deleted", deletedJob });
+  return job;
 };
