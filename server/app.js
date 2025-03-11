@@ -11,6 +11,7 @@ import cookieParser from "cookie-parser";
 // routers
 import jobsRoutes from "./routes/job.routes.js";
 import authRoutes from "./routes/auth.routes.js";
+import usersRoutes from "./routes/users.routes.js";
 
 // middlewares
 import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
@@ -31,6 +32,7 @@ app.get("/", (req, res, next) => {
 
 app.use("/api/v1/jobs/", isAuth, jobsRoutes);
 app.use("/api/v1/auth/", authRoutes);
+app.use("/api/v1/users/", isAuth, usersRoutes);
 
 app.use("*", (req, res, next) => {
   res.status(404).json({ message: "Not Found" });
