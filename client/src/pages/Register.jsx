@@ -1,9 +1,10 @@
 import React from "react";
 
 import { Form, Link, redirect, useNavigation } from "react-router-dom";
+import styled from "styled-components";
+import { toast } from "react-toastify";
 
 import { FormRow, Logo } from "../components";
-import styled from "styled-components";
 import customFetch from "../utils/customFetch";
 
 const Register = () => {
@@ -58,8 +59,10 @@ export const action = async ({ request }) => {
 
   try {
     await customFetch.post("/auth/register", data, {});
+    toast.success("Registration Successful");
     return redirect("/login");
   } catch (err) {
+    toast.error(err?.response?.data?.message);
     console.log(err);
     return err;
   }
