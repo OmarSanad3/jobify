@@ -1,20 +1,25 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
+import { Form, Link, redirect, useNavigation } from "react-router-dom";
 
 import { FormRow, Logo } from "../components";
 import styled from "styled-components";
+import customFetch from "../utils/customFetch";
 
 const Register = () => {
+  const navigation = useNavigation();
+  console.log(navigation);
+  const isSubmitting = navigation.state === "submitting";
+
   return (
     <Wrapper>
-      <form action="" className="form">
+      <Form method="post" className="form">
         <Logo />
         <h4>Register</h4>
 
         <FormRow
           type={"text"}
-          name={"firstName"}
+          name={"name"}
           labelText={"first name"}
           defaultValue={"Omar"}
         />
@@ -32,8 +37,8 @@ const Register = () => {
 
         <FormRow type="password" name="password" defaultValue="Serect!1" />
 
-        <button type="submit" className="btn btn-block">
-          Register
+        <button type="submit" className="btn btn-block" disabled={isSubmitting}>
+          {isSubmitting ? "Submitting..." : "Register"}
         </button>
 
         <p>
@@ -42,9 +47,22 @@ const Register = () => {
             Login
           </Link>
         </p>
-      </form>
+      </Form>
     </Wrapper>
   );
+};
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+
+  try {
+    await customFetch.post("/auth/register", data, {});
+    return redirect("/login");
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
 };
 
 const Wrapper = styled.div`
