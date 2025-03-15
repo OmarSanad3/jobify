@@ -36,7 +36,7 @@ const Register = () => {
 
         <FormRow type={"email"} name={"email"} defaultValue={"o@g.com"} />
 
-        <FormRow type="password" name="password" defaultValue="Serect!1" />
+        <FormRow type="password" name="password" defaultValue="Secret!1" />
 
         <button type="submit" className="btn btn-block" disabled={isSubmitting}>
           {isSubmitting ? "Submitting..." : "Register"}
