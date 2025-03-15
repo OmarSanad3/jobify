@@ -1,9 +1,20 @@
 import { createContext, useContext, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, redirect, useLoaderData } from "react-router-dom";
 import styled from "styled-components";
 
 import { BigSidebar, Navbar, SmallSidebar } from "../components";
 import { checkDefaultTheme } from "../App";
+import customFetch from "../utils/customFetch";
+
+export const loader = async () => {
+  try {
+    const { data } = await customFetch.get("/users/current-user/");
+    return data;
+  } catch (err) {
+    console.log(err);
+    return redirect("/login");
+  }
+};
 
 const DashboardContext = createContext({
   user: {},
@@ -15,7 +26,9 @@ const DashboardContext = createContext({
 });
 
 const DashboardLayout = () => {
-  const user = { name: "Omar" };
+  const { user } = useLoaderData();
+
+  console.log(user);
 
   const [showSidebar, setShowSidebar] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(checkDefaultTheme());
