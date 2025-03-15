@@ -15,6 +15,7 @@ import {
 } from "./pages";
 
 import { action as registerAction } from "./pages/Register";
+import { action as loginAction } from "./pages/Login";
 
 export const checkDefaultTheme = () => {
   const isDarkTheme = localStorage.getItem("dark-theme") === "true";
@@ -47,7 +48,7 @@ const router = createBrowserRouter([
           { path: "admin", element: <Admin /> },
         ],
       },
-      { path: "login", element: <Login /> },
+      { path: "login", element: <Login />, action: loginAction },
     ],
   },
 ]);

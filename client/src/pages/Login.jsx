@@ -1,25 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Form, Link, redirect, useNavigation } from "react-router-dom";
+import styled from "styled-components";
+import { toast } from "react-toastify";
 
 import { FormRow, Logo } from "../components";
-import styled from "styled-components";
+import customFetch from "../utils/customFetch";
 
 const Login = () => {
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+
   return (
     <Wrapper>
-      <form action="" className="form">
+      <Form method="post" className="form">
         <Logo />
         <h4>Login</h4>
 
-        <FormRow type="email" name="email" defaultValue="o@gm.com" />
+        <FormRow type="email" name="email" defaultValue="o@g.com" />
 
         <FormRow type="password" name="password" defaultValue="Secret!1" />
 
-        <button type="submit" className="btn btn-block">
-          Login
+        <button type="submit" className="btn btn-block" disabled={isSubmitting}>
+          {isSubmitting ? "submitting..." : "Login"}
         </button>
 
-        <button type="button" className="btn btn-block">
+        <button type="button" className="btn btn-block" disabled={isSubmitting}>
           Explore the app
         </button>
 
@@ -29,9 +34,24 @@ const Login = () => {
             Register
           </Link>
         </p>
-      </form>
+      </Form>
     </Wrapper>
   );
+};
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+
+  try {
+    await customFetch.post("/auth/login", data);
+    toast.success("Login Successful", { theme: "dark" });
+    return redirect("/dashboard");
+  } catch (err) {
+    console.log(err);
+    toast.error(err?.response?.data?.message, { theme: "dark" });
+    return err;
+  }
 };
 
 const Wrapper = styled.div`
