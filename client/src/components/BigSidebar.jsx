@@ -78,6 +78,10 @@ const Wrapper = styled.aside`
       color: var(--primary-500);
     }
 
+    .nav-link.pending {
+      background-color: var(--background-color);
+    }
+
     .icon {
       font-size: 1.5rem;
       margin-right: 1rem;
