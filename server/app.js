@@ -3,10 +3,14 @@ import "express-async-errors";
 import * as dotenv from "dotenv";
 dotenv.config();
 
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+
 import express from "express";
 import morgan from "morgan";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import { v2 as cloudinary } from "cloudinary";
 
 // routers
 import jobsRoutes from "./routes/job.routes.js";
@@ -22,6 +26,15 @@ const app = express();
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.resolve(__dirname, "./public/")));
 
 app.use(express.json());
 app.use(cookieParser());
