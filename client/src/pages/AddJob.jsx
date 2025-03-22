@@ -2,7 +2,7 @@ import { Form, redirect, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { FormRow, FormRowSelect, SubmitBtn } from "../components";
-import { JOB_STATUS, JOB_TYPE } from "../../../server/utils/constants";
+import { JOB_STATUS, JOB_TYPE } from "../utils/constants";
 import customFetch from "../utils/customFetch";
 import { toast } from "react-toastify";
 

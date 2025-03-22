@@ -4,7 +4,7 @@ import { Form, redirect, useLoaderData } from "react-router-dom";
 
 import customFetch from "../utils/customFetch";
 import { FormRow, FormRowSelect, SubmitBtn } from "../components";
-import { JOB_STATUS, JOB_TYPE } from "../../../server/utils/constants";
+import { JOB_STATUS, JOB_TYPE } from "../utils/constants";
 
 export const loader = async ({ params }) => {
   const { id } = params;
