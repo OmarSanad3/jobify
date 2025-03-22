@@ -12,7 +12,7 @@ export const loader = async () => {
     const { data } = await customFetch.get("/users/current-user/");
     return data;
   } catch (err) {
-    console.log(err);
+    toast.error(err?.response?.data?.message);
     return redirect("/login");
   }
 };
