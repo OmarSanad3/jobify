@@ -14,6 +14,7 @@ import {
   updateJob,
   deleteJob,
 } from "../controllers/jobs.controller.js";
+import checkForTestUser from "../middlewares/checkForTestUser.js";
 
 // router.get("/", getAllJobs);
 
@@ -25,11 +26,14 @@ import {
 
 // router.delete("/:jobId/", deleteJob);
 
-router.route("/").get(getAllJobs).post(validateJobInput, createJob);
+router
+  .route("/")
+  .get(getAllJobs)
+  .post(checkForTestUser, validateJobInput, createJob);
 router
   .route("/:id/")
   .get(validateIdParam, getJob)
-  .patch(validateIdParam, validateJobInput, updateJob)
-  .delete(validateIdParam, deleteJob);
+  .patch(checkForTestUser, validateIdParam, validateJobInput, updateJob)
+  .delete(checkForTestUser, validateIdParam, deleteJob);
 
 export default router;

@@ -9,6 +9,7 @@ import {
 } from "../controllers/users.controller.js";
 import { validateUpdateUser } from "../validators/users.validator.js";
 import upload from "../middlewares/multer.middleware.js";
+import checkForTestUser from "../middlewares/checkForTestUser.js";
 
 router.get("/current-user", getCurrentUser);
 
@@ -16,6 +17,7 @@ router.get("/admin/app-stats", getApplicationStats);
 
 router.patch(
   "/update-user",
+  checkForTestUser,
   upload.single("avatar"),
   validateUpdateUser,
   updateUser
