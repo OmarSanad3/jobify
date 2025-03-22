@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Link, redirect } from "react-router-dom";
+import { Form, Link, redirect, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 
@@ -16,6 +16,25 @@ export const loader = async () => {
 };
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const handleLoginDemoUser = async () => {
+    const data = {
+      name: "Test",
+      lastName: "Test",
+      email: "test@test.test",
+      password: "Test123*",
+      location: "Test Town",
+    };
+    try {
+      await customFetch.post("/auth/login", data);
+      toast.success("Take a test drive");
+      navigate("/dashboard");
+    } catch (err) {
+      toast.error(err?.response?.data?.message);
+    }
+  };
+
   return (
     <Wrapper>
       <Form method="post" className="form">
@@ -28,7 +47,11 @@ const Login = () => {
 
         <SubmitBtn btnText="login" />
 
-        <button type="button" className="btn btn-block">
+        <button
+          type="button"
+          className="btn btn-block"
+          onClick={handleLoginDemoUser}
+        >
           Explore the app
         </button>
 
