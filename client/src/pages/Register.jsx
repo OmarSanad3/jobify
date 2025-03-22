@@ -5,6 +5,15 @@ import { toast } from "react-toastify";
 import { FormRow, Logo, SubmitBtn } from "../components";
 import customFetch from "../utils/customFetch";
 
+export const loader = async () => {
+  try {
+    await customFetch.get("/users/current-user/");
+    return redirect("/dashboard");
+  } catch {
+    return null;
+  }
+};
+
 const Register = () => {
   return (
     <Wrapper>

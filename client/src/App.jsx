@@ -26,6 +26,8 @@ import { loader as dashboardLoader } from "./pages/DashboardLayout";
 import { loader as AllJobsLoader } from "./pages/AllJobs";
 import { loader as EditJobLoader } from "./pages/EditJob";
 import { loader as adminLoader } from "./pages/Admin";
+import { loader as registerLoader } from "./pages/Register";
+import { loader as loginLoader } from "./pages/Login";
 
 export const checkDefaultTheme = () => {
   const isDarkTheme = localStorage.getItem("dark-theme") === "true";
@@ -45,7 +47,14 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+        loader: registerLoader,
         action: registerAction,
+      },
+      {
+        path: "login",
+        element: <Login />,
+        loader: loginLoader,
+        action: loginAction,
       },
       {
         path: "dashboard",
@@ -66,7 +75,6 @@ const router = createBrowserRouter([
           { path: "admin", element: <Admin />, loader: adminLoader },
         ],
       },
-      { path: "login", element: <Login />, action: loginAction },
     ],
   },
 ]);
