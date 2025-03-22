@@ -1,10 +1,5 @@
-import {
-  Form,
-  redirect,
-  useNavigation,
-  useOutletContext,
-} from "react-router-dom";
-import { FormRow } from "../components";
+import { Form, redirect, useOutletContext } from "react-router-dom";
+import { FormRow, SubmitBtn } from "../components";
 import { toast } from "react-toastify";
 
 import customFetch from "../utils/customFetch";
@@ -12,8 +7,6 @@ import customFetch from "../utils/customFetch";
 const Profile = () => {
   const { user } = useOutletContext();
   const { name, lastName, email, location } = user;
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
 
   return (
     <div>
@@ -42,13 +35,7 @@ const Profile = () => {
           <FormRow type="email" name="email" defaultValue={email} />
           <FormRow type="text" name="location" defaultValue={location} />
 
-          <button
-            type="submit"
-            className="btn btn-block form-btn"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "submitting..." : "update profile"}
-          </button>
+          <SubmitBtn isFormBtn btnText="update profile" />
         </div>
       </Form>
     </div>

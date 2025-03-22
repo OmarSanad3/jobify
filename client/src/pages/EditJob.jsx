@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { toast } from "react-toastify";
-import { Form, redirect, useLoaderData, useNavigation } from "react-router-dom";
+import { Form, redirect, useLoaderData } from "react-router-dom";
 
 import customFetch from "../utils/customFetch";
-import { FormRow, FormRowSelect } from "../components";
+import { FormRow, FormRowSelect, SubmitBtn } from "../components";
 import { JOB_STATUS, JOB_TYPE } from "../../../server/utils/constants";
 
 export const loader = async ({ params }) => {
@@ -19,9 +19,6 @@ export const loader = async ({ params }) => {
 
 const EditJob = () => {
   const { job } = useLoaderData();
-
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
 
   return (
     <Wrapper>
@@ -48,13 +45,7 @@ const EditJob = () => {
             defaultValue={job.jobType}
             list={Object.values(JOB_TYPE)}
           />
-          <button
-            type="submit"
-            className="btn btn-block form-btn"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "submitting..." : "update job"}
-          </button>
+          <SubmitBtn isFormBtn btnText="update job" />
         </div>
       </Form>
     </Wrapper>

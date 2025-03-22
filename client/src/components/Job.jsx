@@ -1,11 +1,12 @@
 import { FaBriefcase, FaCalendar, FaLocationArrow } from "react-icons/fa";
-import { Form, Link, useNavigation } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
+import styled from "styled-components";
 import day from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 day.extend(advancedFormat);
 
 import JobInfo from "./JobInfo";
-import styled from "styled-components";
+import SubmitBtn from "./SubmitBtn";
 
 const Job = ({
   _id,
@@ -17,9 +18,6 @@ const Job = ({
   createdAt,
 }) => {
   const date = day(createdAt).format("MMM Do, YYYY");
-
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
 
   return (
     <Wrapper>
@@ -38,11 +36,11 @@ const Job = ({
           <div className={`status ${jobStatus}`}>{jobStatus}</div>
         </div>
         <footer className="actions">
-          <Link to={`../edit-job/${_id}`} className="btn edit-btn">Edit</Link>
+          <Link to={`../edit-job/${_id}`} className="btn edit-btn">
+            Edit
+          </Link>
           <Form method="delete" action={`../delete-job/${_id}`}>
-            <button type="submit" className="btn delete-btn" disabled={isSubmitting}>
-              {isSubmitting ? "Deleting..." : "Delete"}
-            </button>
+            <SubmitBtn isFormBtn isDeleteBtn btnText="delete job" />
           </Form>
         </footer>
       </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Link, redirect, useNavigation } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 
@@ -7,9 +7,6 @@ import { FormRow, Logo } from "../components";
 import customFetch from "../utils/customFetch";
 
 const Login = () => {
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
-
   return (
     <Wrapper>
       <Form method="post" className="form">
@@ -20,11 +17,9 @@ const Login = () => {
 
         <FormRow type="password" name="password" defaultValue="Secret!1" />
 
-        <button type="submit" className="btn btn-block" disabled={isSubmitting}>
-          {isSubmitting ? "submitting..." : "Login"}
-        </button>
+        <SubmitBtn btnText="login" />
 
-        <button type="button" className="btn btn-block" disabled={isSubmitting}>
+        <button type="button" className="btn btn-block">
           Explore the app
         </button>
 

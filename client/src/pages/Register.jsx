@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Form, Link, redirect, useNavigation } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 
@@ -8,10 +8,6 @@ import { FormRow, Logo } from "../components";
 import customFetch from "../utils/customFetch";
 
 const Register = () => {
-  const navigation = useNavigation();
-  console.log(navigation);
-  const isSubmitting = navigation.state === "submitting";
-
   return (
     <Wrapper>
       <Form method="post" className="form">
@@ -38,9 +34,7 @@ const Register = () => {
 
         <FormRow type="password" name="password" defaultValue="Secret!1" />
 
-        <button type="submit" className="btn btn-block" disabled={isSubmitting}>
-          {isSubmitting ? "Submitting..." : "Register"}
-        </button>
+        <SubmitBtn btnText="register" />
 
         <p>
           Already a member?
