@@ -3,7 +3,7 @@ import { Form, Link, redirect } from "react-router-dom";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 
-import { FormRow, Logo } from "../components";
+import { FormRow, Logo, SubmitBtn } from "../components";
 import customFetch from "../utils/customFetch";
 
 const Login = () => {
